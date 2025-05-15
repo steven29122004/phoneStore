@@ -2,6 +2,7 @@ let products = [];
 
 const phoneEntity = require('../model/phone.model');
 const ResponseType = require('../dto/response.type');
+const { raw } = require('express');
 
 
 exports.getPage = async (req, res) => {
@@ -26,6 +27,20 @@ exports.postForm = async (req, res) => {
     }
 }
 
+exports.editProduct = async (req, res) => {
+    try {
+        const { body: { name, price, image } } = req;
+        const { id } = req.params;
+        const updateProduct = await phoneEntity.findByIdAndUpdate(id, {
+            name,
+            price,
+            image,
+        })
+        res.json(new ResponseType(updateProduct).success());
+    } catch (error) {
+        res.json(new ResponseType(null).error())
+    }
+}
 
 exports.getDetail = async (req, res) => {
     const { id } = req.params;
@@ -33,8 +48,23 @@ exports.getDetail = async (req, res) => {
     res.render('page/productDetail', { productDetail });
 }
 
-exports.deleteProduct = (req, res) => {
+exports.getDetailAPI = async (req, res) => {
     const { id } = req.params;
-    products.splice(products.findIndex(item => item.id == id), 1);
-    res.redirect('/');
+    const productDetail = await phoneEntity.findById(id);
+    res.json(productDetail);
+}
+
+exports.deleteProduct = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const deleteProduct = await phoneEntity.findByIdAndDelete(id);
+
+        if (!deleteProduct) {
+            res.json(new ResponseType(null).error())
+        }
+        res.json(new ResponseType(true).success());
+    } catch (error) {
+        res.json(new ResponseType(null).error())
+    }
+
 }
