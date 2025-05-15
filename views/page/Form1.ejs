@@ -32,19 +32,19 @@
                         <div class="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
                             <div class="flex flex-col">
                                 <label class="leading-loose">Phone Name</label>
-                                <input type="text"
+                                <input type="text" id="nameProduct"
                                     class="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"
                                     placeholder="Iphone 13 Pro">
                             </div>
                             <div class="flex flex-col">
                                 <label class="leading-loose">Phone Price</label>
-                                <input type="text"
+                                <input type="text" id="priceProduct"
                                     class="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"
                                     placeholder="1$">
                             </div>
                             <div class="flex flex-col">
                                 <label class="leading-loose">Phone Image</label>
-                                <input type="text"
+                                <input type="text" id="imageLink"
                                     class="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"
                                     placeholder="Image Link">
                             </div>
@@ -58,7 +58,7 @@
                                         d="M6 18L18 6M6 6l12 12"></path>
                                 </svg> Cancel
                             </button>
-                            <button
+                            <button id="submit"
                                 class="bg-blue-500 flex justify-center items-center w-full text-white px-4 py-3 rounded-md focus:outline-none">Create</button>
                         </div>
                     </div>
@@ -67,5 +67,36 @@
         </div>
     </div>
 </body>
+<script>
+    let form = document.querySelector('form');
+
+    let nameproducts = document.getElementById('nameProduct');
+    let priceproduct = document.getElementById('priceProduct');
+    let imageLink = document.getElementById('imageLink');
+
+    document.getElementById('submit').addEventListener('click', (e) => {
+        e.preventDefault();
+        let product = {
+            name: nameproducts.value,
+            price: priceproduct.value,
+            image: imageLink.value
+        }
+        fetch('http://localhost:3000/form', {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8'
+            },
+            body: JSON.stringify(product)
+        })
+            .then(res => res.json())
+            .then((json) => {
+                if (json == 200) {
+                    alert('Success'),
+                        window.location.href = '/'
+                }
+            })
+
+    })
+</script>
 
 </html>
