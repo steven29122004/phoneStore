@@ -8,10 +8,12 @@
         <%= title%>
     </title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://kit.fontawesome.com/de81a45678.js" crossorigin="anonymous"></script>
+
 </head>
 
 <body>
-    <%- include('../components/navbar')%>
+    <%- include('../components/elements/navbar')%>
         <section class="bg-gray-50 py-8 antialiased dark:bg-gray-900 md:py-12">
 
             <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
@@ -136,11 +138,14 @@
 
                     <% products.forEach(item=> {%>
                         <div
-                            class="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800 cursor-pointer">
-                            <div class="h-56 w-full" onclick="window.location.href='/detail/<%= item.id%>'">
-                                <a href="#">
-                                    <img class="mx-auto hidden h-full dark:block" src="<%= item.image%>" alt="" />
-                                </a>
+                            class="relative rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800 ">
+                            <div class="id hidden">
+                                <%= item.id%>
+                            </div>
+                            <button data-id="<%= item.id%>" class="dlt"><i
+                                    class=" fa-solid fa-trash bg-black hover:bg-red-500 transition-all duration-300 ease-in-out text-white rounded-lg cursor-pointer p-4 mb-5 "></i></button>
+                            <div class="h-56 w-full">
+                                <img class="mx-auto hidden h-full dark:block" src="<%= item.image%>" alt="" />
                             </div>
                             <div class="pt-6">
                                 <div class="mb-4 flex items-center justify-between gap-4">
@@ -150,8 +155,11 @@
 
                                     <div class="flex items-center justify-end gap-1">
                                         <button type="button" data-tooltip-target="tooltip-quick-look"
-                                            class="rounded-lg p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-                                            <span class="sr-only"> Quick look </span>
+                                            class="rounded-lg p-2 text-gray-500 cursor-pointer hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white "
+                                            onclick="window.location.href='/detail/<%= item.id %>'">
+                                            <span class="">
+
+                                            </span>
                                             <svg class="h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                                                 width="24" height="24" fill="none" viewBox="0 0 24 24">
                                                 <path stroke="currentColor" stroke-width="2"
@@ -236,7 +244,8 @@
                                                 stroke-width="2"
                                                 d="M13 7h6l2 4m-8-4v8m0-8V6a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v9h2m8 0H9m4 0h2m4 0h2v-4m0 0h-5m3.5 5.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Zm-10 0a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z" />
                                         </svg>
-                                        <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Fast Delivery
+                                        <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Fast
+                                            Delivery
                                         </p>
                                     </li>
 
@@ -246,13 +255,14 @@
                                             <path stroke="currentColor" stroke-linecap="round" stroke-width="2"
                                                 d="M8 7V6c0-.6.4-1 1-1h11c.6 0 1 .4 1 1v7c0 .6-.4 1-1 1h-1M3 18v-7c0-.6.4-1 1-1h11c.6 0 1 .4 1 1v7c0 .6-.4 1-1 1H4a1 1 0 0 1-1-1Zm8-3.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z" />
                                         </svg>
-                                        <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Best Price</p>
+                                        <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Best Price
+                                        </p>
                                     </li>
                                 </ul>
 
                                 <div class="mt-4 flex items-center justify-between gap-4">
-                                    <p class="text-2xl font-extrabold leading-tight text-gray-900 dark:text-white">$<%=
-                                            item.price%>
+                                    <p class="text-2xl font-extrabold leading-tight text-gray-900 dark:text-white">$
+                                        <%= item.price%>
                                     </p>
 
                                     <button type="button"
@@ -279,5 +289,28 @@
             </form>
         </section>
 </body>
+<script>
+    const deleteBtn = document.querySelectorAll('.dlt');
+
+
+    deleteBtn.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const id = btn.getAttribute('data-id');
+            fetch(`http://localhost:3000/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json; charset=UTF-8'
+                }
+            }).then((res) => res.json())
+                .then(({ code }) => {
+                    if (code == 200) {
+                        window.location.href = '/';
+                    }
+                })
+        })
+    })
+
+
+</script>
 
 </html>

@@ -7,7 +7,7 @@ router.get('/form', pController.getForm);
 router.post('/form', pController.postForm);
 router.get('/detail/:id', pController.getDetail);
 router.get('/api/detail/:id', pController.getDetailAPI);
-router.delete('/detail', pController.deleteProduct)
+router.delete('/:id', pController.deleteProduct)
 
 module.exports = router;
 

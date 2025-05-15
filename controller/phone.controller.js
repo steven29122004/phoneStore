@@ -60,11 +60,11 @@ exports.deleteProduct = async (req, res) => {
         const deleteProduct = await phoneEntity.findByIdAndDelete(id);
 
         if (!deleteProduct) {
-            res.json(new ResponseType(null).error())
+            res.json(new ResponseType(false).error())
         }
         res.json(new ResponseType(true).success());
     } catch (error) {
-        res.json(new ResponseType(null).error())
+        res.json(new ResponseType(false).error())
     }
 
 }
