@@ -15,23 +15,21 @@ exports.getForm = (req, res) => {
     res.render('page/form', { products });
 }
 
-exports.postForm = (req, res) => {
+exports.postForm = async (req, res) => {
     try {
-        const { body } = req;
-        products.push({
-            id: Number(Math.random()),
-            ...body
-        })
-        res.json(200, "Server Success")
+        const { body: { name, price, image } } = req;
+        const createProduct = new phoneEntity({ name, price, image });
+        await createProduct.save();
+        res.json(new ResponseType(createProduct).success())
     } catch (error) {
-        res.json(500, "Server Error")
+        res.json(new ResponseType(null).error())
     }
 }
 
 
-exports.getDetail = (req, res) => {
+exports.getDetail = async (req, res) => {
     const { id } = req.params;
-    const productDetail = products.find(item => item.id == id);
+    const productDetail = await phoneEntity.findById(id);
     res.render('page/productDetail', { productDetail });
 }
 

@@ -134,7 +134,7 @@
                 <% products.forEach(item=> {%>
                     <div
                         class="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800 cursor-pointer">
-                        <div class="h-56 w-full" onclick="window.location.href='/<%= item.id%>'">
+                        <div class="h-56 w-full" onclick="window.location.href='/detail/<%= item.id%>'">
                             <a href="#">
                                 <img class="mx-auto hidden h-full dark:block" src="<%= item.image%>" alt="" />
                             </a>
