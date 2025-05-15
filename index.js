@@ -2,7 +2,10 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const port = 3000;
-const Path = require('./controller/practiceRouter');
+const Path = require('./controller/phone.router');
+
+const mongoDB = require('./database');
+mongoDB();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
