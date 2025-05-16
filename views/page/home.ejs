@@ -12,14 +12,12 @@
 
 </head>
 
-<body>
+<body class="relative">
+    <%- include('../components/modal/editPopUp')%>
+    
    
     <%- include('../components/elements/navbar')%>
-        <section class="relative bg-gray-50 py-8 antialiased dark:bg-gray-900 md:py-12">
-            <div class="fixed bottom-10 right-6 ">
-
-                <%- include('../components/button/editPopUp')%>
-            </div>
+        <section class="bg-gray-50 py-8 antialiased dark:bg-gray-900 md:py-12 ">
             <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
                 <!-- Heading & Filters -->
                 <div class="mb-4 items-end justify-between space-y-4 sm:flex sm:space-y-0 md:mb-8">
@@ -301,8 +299,57 @@
             </div>
             </form>
         </section>
+        <%- include('../components/modal/formModal')%>
 </body>
 <script>
+
+let form = document.querySelector('form');
+
+let nameproducts = document.getElementById('nameProduct');
+let priceproduct = document.getElementById('priceProduct');
+let imageLink = document.getElementById('imageLink');
+
+// const APIProduct = () => {
+//     fetch(`http://localhost:3000/api/detail/${id}`, {
+//         method: 'GET',
+//         headers: {
+//             'Content-Type': 'application/json; charset=UTF-8'
+//         }
+//     }).then((res) => res.json())
+//         .then(({ data, code, message }) => {
+//             if (code == 200) {
+//                 name.value = data.name,
+//                     price.value = data.price,
+//                     image.value = data.image
+//             }
+//         })
+// }
+// APIProduct();
+
+document.getElementById('submit').addEventListener('click', (e) => {
+    e.preventDefault();
+    let product = {
+        name: nameproducts.value,
+        price: priceproduct.value,
+        image: imageLink.value
+    }
+    fetch('http://localhost:3000/form', {
+        method: 'POST',
+        headers: {
+            'Content-type': 'application/json; charset=UTF-8'
+        },
+        body: JSON.stringify(product)
+    })
+        .then(res => res.json())
+        .then(({ code }) => {
+            if (code == 200) {
+                window.location.href = '/'
+            }
+        })
+
+})
+
+
     const deleteBtn = document.querySelectorAll('.dlt');
 
 
@@ -321,6 +368,17 @@
                     }
                 })
         })
+    })
+
+    const modalBtn = document.querySelector('.modalBtn').addEventListener('click', ()=> {
+        const formModel = document.querySelector('.formModal')
+        
+        formModel.classList.remove('hidden');
+    })
+
+    const cancelBtn = document.querySelector('.cancelBtn').addEventListener('click', ()=> {
+        const formModel = document.querySelector('.formModal')
+        formModel.classList.add('hidden');
     })
 
 
