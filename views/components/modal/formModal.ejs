@@ -45,10 +45,58 @@
                             </svg > Cancel
                         </button>
                         <button id="submit"
-                            class="bg-blue-500 flex justify-center items-center w-full text-white px-4 py-3 rounded-md focus:outline-none">Create</button>
+                            class="bg-blue-500 cursor-pointer flex justify-center items-center w-full text-white px-4 py-3 rounded-md focus:outline-none">Create</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<!-- <script>
+    let form = document.querySelector('form');
+
+    let nameproducts = document.getElementById('nameProduct');
+    let priceproduct = document.getElementById('priceProduct');
+    let imageLink = document.getElementById('imageLink');
+
+    // const APIProduct = () => {
+    //     fetch(`http://localhost:3000/api/detail/${id}`, {
+    //         method: 'GET',
+    //         headers: {
+    //             'Content-Type': 'application/json; charset=UTF-8'
+    //         }
+    //     }).then((res) => res.json())
+    //         .then(({ data, code, message }) => {
+    //             if (code == 200) {
+    //                 name.value = data.name,
+    //                     price.value = data.price,
+    //                     image.value = data.image
+    //             }
+    //         })
+    // }
+    // APIProduct();
+
+    document.getElementById('submit').addEventListener('click', (e) => {
+        e.preventDefault();
+        let product = {
+            name: nameproducts.value,
+            price: priceproduct.value,
+            image: imageLink.value
+        }
+        fetch('http://localhost:3000/form', {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8'
+            },
+            body: JSON.stringify(product)
+        })
+            .then(res => res.json())
+            .then(({ code }) => {
+                if (code == 200) {
+                    window.location.href = '/'
+                }
+            })
+
+    })
+</script> -->

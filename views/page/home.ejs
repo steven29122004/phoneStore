@@ -333,7 +333,7 @@ document.getElementById('submit').addEventListener('click', (e) => {
         price: priceproduct.value,
         image: imageLink.value
     }
-    fetch('http://localhost:3000/form', {
+    fetch('http://localhost:3000/', {
         method: 'POST',
         headers: {
             'Content-type': 'application/json; charset=UTF-8'
@@ -370,8 +370,8 @@ document.getElementById('submit').addEventListener('click', (e) => {
         })
     })
 
+    const formModel = document.querySelector('.formModal')
     const modalBtn = document.querySelector('.modalBtn').addEventListener('click', ()=> {
-        const formModel = document.querySelector('.formModal')
         
         formModel.classList.remove('hidden');
     })
