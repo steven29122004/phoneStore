@@ -2,7 +2,6 @@ let products = [];
 
 const phoneEntity = require('../model/phone.model');
 const ResponseType = require('../dto/response.type');
-const { raw } = require('express');
 
 
 exports.getPage = async (req, res) => {
@@ -13,7 +12,7 @@ exports.getPage = async (req, res) => {
     });
 }
 exports.getForm = (req, res) => {
-    res.render('page/form', { products });
+    res.render('components/modal/formModal', { products, title: 'form' });
 }
 
 exports.postForm = async (req, res) => {
